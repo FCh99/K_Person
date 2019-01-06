@@ -24,26 +24,30 @@ class MainActivity : AppCompatActivity() {
         "Gene" to "Middle",
         "Louise" to "Youngest")
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         println("--------->")
 
-        val myFile = FileInOut(file, family, this)
-        myFile.write()
-        myFile.read()
+        
+
+
 
 
 
 
     }
-
 }
 
-class FileInOut (val file: String, val family: Map<String, String>, val context: Context) {
+
+class FileInOut(val file: String, val family: Map<String, String>, val context: Context){
 
     val fileAbstract = File(context.filesDir,file)
+
+
+
 
     fun write() {
         //Write the family map object to a file
@@ -52,7 +56,8 @@ class FileInOut (val file: String, val family: Map<String, String>, val context:
 
 
     }
-     fun read() {
+
+    fun read() {
         //Now time to read the family back into memory
         ObjectInputStream(FileInputStream(fileAbstract)).use { it ->
             //Read the family back from the file
@@ -64,11 +69,11 @@ class FileInOut (val file: String, val family: Map<String, String>, val context:
                 is Map<*, *> -> println(restedFamily)
                 else -> println("Deserialization failed")
             }
-
         }
-
-
     }
+
+
+
 
 
 }
