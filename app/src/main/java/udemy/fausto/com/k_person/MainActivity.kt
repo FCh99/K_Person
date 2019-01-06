@@ -15,7 +15,14 @@ class Worker {}
 
 class MainActivity : AppCompatActivity() {
 
+    val file = "belchers.burgers"
 
+    val family = mapOf(
+        "Bob" to "Father",
+        "Linda" to "Mother",
+        "Tina" to "Oldest",
+        "Gene" to "Middle",
+        "Louise" to "Youngest")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,23 +30,29 @@ class MainActivity : AppCompatActivity() {
 
         println("--------->")
 
-        //Destination File
-        val file = "belchers.burgers"
-        val fileAbstract = File(applicationContext.filesDir,file)
+        val myFile = FileInOut(file, family, this)
+        myFile.write()
+        myFile.read()
 
-        //A map of family
-        val family = mapOf(
-            "Bob" to "Father",
-            "Linda" to "Mother",
-            "Tina" to "Oldest",
-            "Gene" to "Middle",
-            "Louise" to "Youngest")
 
+
+
+    }
+
+}
+
+class FileInOut (val file: String, val family: Map<String, String>, val context: Context) {
+
+    val fileAbstract = File(context.filesDir,file)
+
+    fun write() {
         //Write the family map object to a file
         ObjectOutputStream(FileOutputStream(fileAbstract)).use{ it -> it.writeObject(family)}
         println("Wrote $fileAbstract")
 
 
+    }
+     fun read() {
         //Now time to read the family back into memory
         ObjectInputStream(FileInputStream(fileAbstract)).use { it ->
             //Read the family back from the file
@@ -51,20 +64,8 @@ class MainActivity : AppCompatActivity() {
                 is Map<*, *> -> println(restedFamily)
                 else -> println("Deserialization failed")
             }
-            
-          }
 
-
-    }
-}
-
-class FileHelper (val file: String, val contentMap: Map<String, String> ,val context: Context) {
-
-    fun write() {
-
-
-    }
-    fun read() {
+        }
 
 
     }
