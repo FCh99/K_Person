@@ -31,11 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         println("--------->")
 
-        
+        val fileInOut = FileInOut(file, family, this)
 
-
-
-
+        fileInOut.write()
+        fileInOut.read()
 
 
     }
